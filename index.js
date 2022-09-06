@@ -1,7 +1,9 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, InteractionType } = require('discord.js');
 const { codeBlock } = require('@discordjs/builders');
-const { token } = require('./config.json');
+require('dotenv').config();
+
+const token = process.env.DISCORD_BOT_TOKEN;
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -9,11 +11,23 @@ client.once('ready', () => {
 	console.log('Ready!');
 });
 
-const api_config = require('./api_config.json');
 const JdoodleAPI = require('./api_client');
 
 const lims = [0,0,0];
-const apis = [new JdoodleAPI(api_config["client1"], new JdoodleAPI(api_config["client2"]), new JdoodleAPI(api_config["client3"]))];
+const apis = [
+	new JdoodleAPI({ 
+		"clientId": process.env.CLIENT_ONE_CLIENT_ID,
+		"clientSecret": process.env.CLIENT_ONE_CLIENT_SECRET
+	}),
+	new JdoodleAPI({
+		"clientId": process.env.CLIENT_TWO_CLIENT_ID,
+		"clientSecret": process.env.CLIENT_TWO_CLIENT_SECRET
+	}), 
+	new JdoodleAPI({
+		"clientId": process.env.CLIENT_THREE_CLIENT_ID,
+		"clientSecret": process.env.CLIENT_THREE_CLIENT_SECRET
+	})
+];
 
 function find_min_index(lims){
 	var result = 0;
@@ -25,7 +39,7 @@ function find_min_index(lims){
 
 function answerFormatter(code, output, memory, cpu){
 	const highlighted = codeBlock('c', code);
-	var answer = `${highlighted}\n\nOutput: ${output}\nMemory Usage: ${memory}\nCpu Time: ${cpu}`;
+	var answer = `${highlighted}\n\nOutput:\n${output}\nMemory Usage: ${memory}\nCpu Time: ${cpu}`;
 	return answer;
 }
 
@@ -62,6 +76,5 @@ client.on('interactionCreate', interaction => {
 		console.log(error);
 	})
 });
-
 
 client.login(token);

@@ -1,7 +1,11 @@
 const { SlashCommandBuilder } = require('@discordjs/builders');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
-const { clientId, guildId, token } = require('./config.json');
+require('dotenv').config();
+
+const clientId = process.env.DISCORD_BOT_CLIENT_ID;
+const guildId = process.env.DISCORD_BOT_GUILD_ID;
+const token = process.env.DISCORD_BOT_TOKEN;
 
 const commands = [
 	new SlashCommandBuilder().setName('compile').setDescription('Compile C code from Discord!'),
