@@ -39,7 +39,7 @@ function find_min_index(lims){
 
 function answerFormatter(code, output, memory, cpu){
 	const highlighted = codeBlock('c', code);
-	var answer = `${highlighted}\n\nOutput:\n${output}\nMemory Usage: ${memory}\nCpu Time: ${cpu}`;
+	var answer = `${highlighted}\n\n**Output**:\n${output}\n\n**Memory Usage**: ${memory}\n\n**Cpu Time**: ${cpu}`;
 	return answer;
 }
 
