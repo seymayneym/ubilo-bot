@@ -1,7 +1,7 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const { ActionRowBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, InteractionType } = require('discord.js');
 const { codeBlock } = require('@discordjs/builders');
-const token = process.env.DISCORD_BOT_TOKEN;
+const { token } = require('./config.json');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
